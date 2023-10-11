@@ -1,0 +1,100 @@
+package com.example.demo.security;
+
+import javax.sql.DataSource;
+
+import org.apache.catalina.User;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
+
+//
+//import javax.sql.DataSource;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+//import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//
+//@Configuration
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//	
+//	@Autowired
+//	private DataSource dataSource;
+//	
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		//PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//		auth.jdbcAuthentication().dataSource(dataSource)
+//		.authoritiesByUsernameQuery("select username ,password ,enabled from users where username =?")
+//		.authoritiesByUsernameQuery("select username ,authority from authorities where username=?");
+//		 		
+//	}
+//
+//	@Override
+//	protected void configure(HttpSecurity httpSecurity) throws Exception {
+//		httpSecurity.authorizeRequests()
+//		.antMatchers("/admin").hasRole("ADMIN")
+//		.antMatchers("/user").hasAnyRole("ADMIN","USER")
+//		.antMatchers("/","static/js").permitAll()
+//		.and().formLogin();
+//	}
+//	
+//	@Bean
+//	public PasswordEncoder getPasswordEncoder(){
+//		return NoOpPasswordEncoder.getInstance();
+//	}
+//}
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+    @Bean
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder()
+            .setType(EmbeddedDatabaseType.H2)
+            .build();
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public UserDetailsManager userDetailsManager() {
+        JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
+        manager.setDataSource(dataSource());
+        return manager;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        UserDetails user = User.builder()
+            .username("user")
+            .passwordEncoder(password -> passwordEncoder().encode(password))
+            .password("password")
+            .roles("USER")
+            .build();
+        auth.jdbcAuthentication()
+            .withDefaultSchema()
+            .dataSource(dataSource())
+            .withUser(user);
+    }
+}

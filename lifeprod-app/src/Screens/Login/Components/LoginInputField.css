@@ -1,0 +1,29 @@
+.login-input-container {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 35px;
+  border: 1px solid;
+  border-color: #CCCCCC;
+  padding: 8px;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.login-input-container:focus-within {
+  border-color: #007BFF;
+}
+
+.login-icon {
+  margin-right: 8px;
+}
+
+input {
+  font-family: 'Poppins Fields';
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  font-size: 14px;
+}

@@ -1,0 +1,16 @@
+package com.example.demo;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ShutdownController {
+  @PostMapping("/close")
+  public void closeApp() {
+  	System.out.println("Shutting down app backend");
+  	
+  	return new ResponseEntity<>("App successfully closed", HttpStatus.OK);
+    System.exit(0);
+  }
+}

@@ -1,0 +1,16 @@
+/* fonts.css */
+@font-face {
+  font-family: 'Poppins H2 Title';
+  src: local('Poppins H2 Title'), local('Poppins H2 Title'),
+       url('./assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins Fields';
+  src: local('Poppins Fields'), local('Poppins Fields'),
+       url('./assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}

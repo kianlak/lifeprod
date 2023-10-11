@@ -1,0 +1,23 @@
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.ApplicationContext;
+import org.springframework.boot.ExitCodeGenerator;
+import org.springframework.boot.SpringApplication;
+
+@RestController
+public class ShutdownController {
+
+    @Autowired
+    private ApplicationContext context;
+
+    @PostMapping("/close")
+    public void shutdown() {
+        new Thread(() -> {
+            context.getBean(ExitCodeGenerator.class).getExitCode();
+            SpringApplication.exit(context, () -> 0);
+        }).start();
+    }
+}

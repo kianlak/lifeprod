@@ -1,0 +1,25 @@
+package com.example.demo;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+@SpringBootApplication
+public class LifeprodBackendApplication {
+  private static final Logger LOGGER = LoggerFactory.getLogger(LifeprodBackendApplication.class);
+
+	public static void main(String[] args) {		
+    ConfigurableApplicationContext context = SpringApplication.run(LifeprodBackendApplication.class, args);
+    DataSource dataSource = context.getBean(DataSource.class);
+
+		LOGGER.info("\u001B[32m SUCCESS: Backend server started \u001B[0m");
+		
+		LOGGER.info("Datasource URL: {}", dataSource.getUrl());
+    LOGGER.info("Datasource Username: {}", dataSource.getUsername());
+    LOGGER.info("Datasource Driver Class Name: {}", dataSource.getDriverClassName());
+	}
+}
