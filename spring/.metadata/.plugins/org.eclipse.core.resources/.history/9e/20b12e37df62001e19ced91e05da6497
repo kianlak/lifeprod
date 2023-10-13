@@ -1,9 +1,0 @@
-package com.example.demo;
-
-@RestController
-public class ShutdownController {
-  @PostMapping("/close")
-  public void closeApp() {
-    System.exit(0);
-  }
-}
