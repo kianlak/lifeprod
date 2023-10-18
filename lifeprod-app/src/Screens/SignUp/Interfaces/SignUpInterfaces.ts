@@ -1,5 +1,5 @@
 interface User {
   username: string;
-  password: string | null;
+  password: string;
   email: string;
 }

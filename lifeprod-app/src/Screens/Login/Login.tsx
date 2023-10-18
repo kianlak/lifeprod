@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LoginInputField } from './Components/LoginInputField';
-import { Alert } from '../../Components/Alert';
+import { Alert } from '../../Components/Alert/Alert';
 
 import './Login.css'
 

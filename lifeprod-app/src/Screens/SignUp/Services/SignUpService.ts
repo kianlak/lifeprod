@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080/api/users';
+const BASE_URL = 'http://localhost:8080/api/user';
 
 export async function signUpRequest(user: User): Promise<boolean> {
   try {

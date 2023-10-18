@@ -16,15 +16,7 @@ public class LifeprodBackendApplication {
 
 	public static void main(String[] args) {		
     ConfigurableApplicationContext context = SpringApplication.run(LifeprodBackendApplication.class, args);
-    DataSource dataSource = context.getBean(DataSource.class);
 
 		LOGGER.info("\u001B[32m SUCCESS: Backend server started \u001B[0m");
-		
-		if (dataSource instanceof HikariDataSource) {
-      HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
-      LOGGER.info("Datasource URL: {}", hikariDataSource.getJdbcUrl());
-      LOGGER.info("Datasource Username: {}", hikariDataSource.getUsername());
-      LOGGER.info("Datasource Driver Class Name: {}", hikariDataSource.getDriverClassName());
-  }
 	}
 }

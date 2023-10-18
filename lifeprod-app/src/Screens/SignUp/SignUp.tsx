@@ -1,10 +1,11 @@
-import React, { ReactElement, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { ReactElement, useState, ChangeEvent } from 'react';
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { signUpRequest } from './Services/SignUpService';
 import { SignUpIputField } from './Components/SignUpInputField';
-import { Alert } from '../../Components/Alert';
+import { Alert } from '../../Components/Alert/Alert';
 
 import './SignUp.css'
+import EventEmitter from '../../Components/Utilities/EventEmitter';
 
 export const SignUp = (): ReactElement => {
   const [username, setUsername] = useState<string>("");
@@ -12,10 +13,11 @@ export const SignUp = (): ReactElement => {
   const [retypedPassword, setRetypedPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [alertType, setAlertType] = useState<string>("");
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
-  const checkSignUp = () => {
+  const checkSignUp = (): boolean => {
     const isUsernameCharactersValid: RegExp = /^[a-zA-Z0-9]+$/;
     const isPasswordCharactersValid: RegExp = /^[a-zA-Z0-9@\$!%*?&]+$/;
     const isEmailCharactersValid: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,7 +45,14 @@ export const SignUp = (): ReactElement => {
 
     for(const condition of conditions) {
       if(condition.validation()) {
-        setAlertMessage(condition.alertMessage);
+        EventEmitter.dispatch({
+          eventType: 'set-alert', 
+          eventPayload: {
+            alertType: 'error',
+            alertMessage: condition.alertMessage
+          }
+        });
+        
         return false;
       }
     }
@@ -52,7 +61,7 @@ export const SignUp = (): ReactElement => {
     return true;
   };
 
-  const signUp = async () => {
+  const signUp = async (): Promise<void> => {
     const user: User = {
       username: username,
       password: password,
@@ -61,29 +70,30 @@ export const SignUp = (): ReactElement => {
 
     if(checkSignUp()) {
       try {
-        const signedUp = await signUpRequest(user);
+        const signedUp: boolean = await signUpRequest(user);
       
         if(signedUp) {
           setAlertMessage('User created successfully');
+          setAlertType('success');
         } else {
           setAlertMessage('Failed to create user');
+          setAlertType('error');
         }
       } catch (error) {
         setAlertMessage('User creation error');
+        setAlertType('error');
         console.error('User creation error:', error);
       }
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = (): void => {
     navigate("/login");
   };
 
   return (
     <>
-      <div>
-        {alertMessage && <Alert type='error' message={alertMessage}></Alert>}
-      </div>
+      <Alert />
       <div className='signup-box'>
         <h2>LifeProd</h2>
         <form>
@@ -92,28 +102,28 @@ export const SignUp = (): ReactElement => {
             placeholder='Username'
             value={username}
             required={true}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setUsername(e.target.value)}}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {setUsername(e.target.value)}}
           />
           <SignUpIputField
             type='password'
             placeholder='Password'
             value={password}
             required={true}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}}
           />
           <SignUpIputField
             type='password'
             placeholder='Re-type Password'
             value={retypedPassword}
             required={true}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setRetypedPassword(e.target.value)}}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {setRetypedPassword(e.target.value)}}
           />       
           <SignUpIputField
             type='text'
             placeholder='Email'
             value={email}
             required={true}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)}}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)}}
           />
         </form>
         <button className="signup-button" onClick={signUp}>Sign Up</button>

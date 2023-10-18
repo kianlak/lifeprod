@@ -1,0 +1,62 @@
+.alert {
+  position: fixed;
+  display: flex;
+  bottom: 20px;
+  left: 50%;
+  align-items: center;
+  padding: 12px;
+  padding-right: 16px;
+  border-radius: 5px;
+  column-gap: 8px;
+  text-align: center;
+  font-family: 'Poppins Alert';
+  font-weight: 500;
+  font-size: 14px;
+  max-width: 90%;
+  white-space: nowrap;
+  color: white;
+  box-shadow: 0 0 30px 10px #00000022;
+  transform: translateX(-50%);
+}
+
+.active {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.inactive {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.alert-icon {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.error {
+  background-color: #df6969;
+  color: #ffffff;
+}
+
+.success {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

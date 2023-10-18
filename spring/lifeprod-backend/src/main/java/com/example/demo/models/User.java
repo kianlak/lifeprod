@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,20 +13,28 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  
+  @Column(unique = true)
   private String username;
+  
+  @Column(unique = true)
+  private String email;
+  
   private String password;
+  
   
 	protected User() {}
 
-	public User(Long id, String username, String password) {
+	public User(Long id, String username, String password, String email) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.email = email;
 	}
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + "]";
 	}
 
 	public Long getId() {
@@ -50,5 +59,13 @@ public class User {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
