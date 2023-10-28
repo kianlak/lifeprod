@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { CheckCircle, WarningOctagon } from "@phosphor-icons/react";
 import EventEmitter from '../Utilities/EventEmitter';
 

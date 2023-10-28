@@ -1,8 +1,10 @@
-import React, { ReactElement, useState, ChangeEvent } from 'react';
+import { ReactElement, useState, ChangeEvent } from 'react';
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { signUpRequest } from './Services/SignUpService';
 import { SignUpIputField } from './Components/SignUpInputField';
 import { Alert } from '../../Components/Alert/Alert';
+
+import { axiosInstance, setupXsrfInterceptor } from '../../axios';
 
 import './SignUp.css'
 import EventEmitter from '../../Components/Utilities/EventEmitter';
@@ -14,6 +16,8 @@ export const SignUp = (): ReactElement => {
   const [email, setEmail] = useState<string>("");
   const [alertMessage, setAlertMessage] = useState<string>("");
   const [alertType, setAlertType] = useState<string>("");
+  const [xsrfToken, setXsrfToken] = useState<string[] | undefined>(undefined);
+
 
   const navigate: NavigateFunction = useNavigate();
 
@@ -57,7 +61,6 @@ export const SignUp = (): ReactElement => {
       }
     }
 
-    setAlertMessage("");
     return true;
   };
 
@@ -76,17 +79,36 @@ export const SignUp = (): ReactElement => {
           setAlertMessage('User created successfully');
           setAlertType('success');
         } else {
-          setAlertMessage('Failed to create user');
-          setAlertType('error');
+          EventEmitter.dispatch({
+            eventType: 'set-alert', 
+            eventPayload: {
+              alertType: 'error',
+              alertMessage: "Something went wrong, please restart the application"
+            }
+          });
         }
       } catch (error) {
-        setAlertMessage('User creation error');
-        setAlertType('error');
-        console.error('User creation error:', error);
+        EventEmitter.dispatch({
+          eventType: 'set-alert', 
+          eventPayload: {
+            alertType: 'error',
+            alertMessage: "User with the same email or username already exists"
+          }
+        });
       }
     }
   };
 
+  const test = async () => {  
+    axiosInstance.get('http://localhost:8080/api/user/all')
+    .then(response => {
+      setupXsrfInterceptor(document.cookie);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  };
+  
   const handleLogin = (): void => {
     navigate("/login");
   };
@@ -129,6 +151,7 @@ export const SignUp = (): ReactElement => {
         <button className="signup-button" onClick={signUp}>Sign Up</button>
         <div className='login-text'>Already have an account? <a href='#' onClick={handleLogin}>Login</a></div>
       </div>
+      <button className="signup-button" onClick={test}>Sign Up</button>
     </>
   );
 };

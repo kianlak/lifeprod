@@ -1,0 +1,15 @@
+package com.example.demo.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.demo.repositories.UserRepository;
+
+public class LifeProdBackendAuthentication implements AuthenticationProvider {
+	@Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+}

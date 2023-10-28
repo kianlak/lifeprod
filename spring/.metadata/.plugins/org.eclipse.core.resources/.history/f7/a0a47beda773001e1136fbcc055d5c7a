@@ -1,0 +1,53 @@
+package com.example.demo.services;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.models.User;
+import com.example.demo.repositories.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+  private PasswordEncoder passwordEncoder;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+	
+  private final UserRepository userRepository;
+
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public User signUpUser(User user) {
+  	try {
+  		String hashedPassword = passwordEncoder.encode(user.getPassword());
+  		user.setPassword(hashedPassword);
+  		User savedUser = userRepository.save(user);
+  		
+  		if(savedUser.getId() > 0) {
+  			return savedUser;
+  		}
+  		throw new RuntimeException("User signup failed");
+  	} catch(RuntimeException ex) {
+  		throw ex;
+  	}
+  }
+  
+  public List<User> getAllUsers() {
+    return userRepository.findAll();
+  }
+
+  public boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
+	public boolean existsByUsername(String username) {
+    return userRepository.existsByUsername(username);
+	}
+}

@@ -1,0 +1,7 @@
+package com.example.demo.config;
+
+import org.springframework.security.authentication.AuthenticationProvider;
+
+public class LifeProdBackendAuthentication implements AuthenticationProvider {
+
+}
