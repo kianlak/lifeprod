@@ -6,6 +6,7 @@ import './Components/CSS/Gradient-Background.css'
 
 import { Login } from './Screens/Login/Login'
 import { SignUp } from './Screens/SignUp/SignUp';
+import { Dashboard } from './Screens/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </div>

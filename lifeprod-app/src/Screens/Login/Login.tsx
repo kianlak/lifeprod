@@ -8,9 +8,6 @@ import './Login.css'
 export const Login = (): ReactElement => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -24,9 +21,7 @@ export const Login = (): ReactElement => {
 
   return (
     <>
-      <div>
-        {errorMessage && <Alert type='error' message={errorMessage}></Alert>}
-      </div>
+      <Alert />
       <div className='login-box'>
         <h2>LifeProd</h2>
         <form>

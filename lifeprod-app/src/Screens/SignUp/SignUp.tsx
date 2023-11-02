@@ -4,8 +4,6 @@ import { signUpRequest } from './Services/SignUpService';
 import { SignUpIputField } from './Components/SignUpInputField';
 import { Alert } from '../../Components/Alert/Alert';
 
-import { axiosInstance } from '../../Axios';
-
 import './SignUp.css'
 import EventEmitter from '../../Components/Utilities/EventEmitter';
 
@@ -14,10 +12,6 @@ export const SignUp = (): ReactElement => {
   const [password, setPassword] = useState<string>("");
   const [retypedPassword, setRetypedPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [alertMessage, setAlertMessage] = useState<string>("");
-  const [alertType, setAlertType] = useState<string>("");
-  const [xsrfToken, setXsrfToken] = useState<string[] | undefined>(undefined);
-
 
   const navigate: NavigateFunction = useNavigate();
 
@@ -56,66 +50,30 @@ export const SignUp = (): ReactElement => {
             alertMessage: condition.alertMessage
           }
         });
-        
         return false;
       }
     }
-
     return true;
   };
 
   const signUp = async (): Promise<void> => {
-    const user: User = {
-      username: username,
-      password: password,
-      email: email
-    };
-
     if(checkSignUp()) {
-      try {
-        axiosInstance.post("http://localhost:8080/api/user/signup", user)
-        .then(response => {
-          console.log('Response Headers:', response.headers);
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      const user: User = {
+        username: username,
+        password: password,
+        email: email
+      };
 
-        if(true) {
-          setAlertMessage('User created successfully');
-          setAlertType('success');
-        } else {
-          EventEmitter.dispatch({
-            eventType: 'set-alert', 
-            eventPayload: {
-              alertType: 'error',
-              alertMessage: "Something went wrong, please restart the application"
-            }
-          });
-        }
-      } catch (error) {
-        EventEmitter.dispatch({
-          eventType: 'set-alert', 
-          eventPayload: {
-            alertType: 'error',
-            alertMessage: "User with the same email or username already exists"
-          }
-        });
-      }
+      await signUpRequest(user) ? handleHomeRedirect() : {};
     }
   };
-
-  const test = async () => {  
-    axiosInstance.get('http://localhost:8080/api/user/all')
-    .then(response => {
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
   
-  const handleLogin = (): void => {
+  const handleLoginRedirect = (): void => {
     navigate("/login");
+  };
+
+  const handleHomeRedirect = (): void => {
+    navigate("/home");
   };
 
   return (
@@ -154,9 +112,8 @@ export const SignUp = (): ReactElement => {
           />
         </form>
         <button className="signup-button" onClick={signUp}>Sign Up</button>
-        <div className='login-text'>Already have an account? <a href='#' onClick={handleLogin}>Login</a></div>
+        <div className='login-text'>Already have an account? <a href='#' onClick={handleLoginRedirect}>Login</a></div>
       </div>
-      <button className="signup-button" onClick={test}>Sign Up</button>
     </>
   );
 };
