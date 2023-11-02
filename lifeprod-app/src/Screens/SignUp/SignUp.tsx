@@ -4,7 +4,7 @@ import { signUpRequest } from './Services/SignUpService';
 import { SignUpIputField } from './Components/SignUpInputField';
 import { Alert } from '../../Components/Alert/Alert';
 
-import { axiosInstance, setupXsrfInterceptor } from '../../axios';
+import { axiosInstance } from '../../Axios';
 
 import './SignUp.css'
 import EventEmitter from '../../Components/Utilities/EventEmitter';
@@ -73,9 +73,15 @@ export const SignUp = (): ReactElement => {
 
     if(checkSignUp()) {
       try {
-        const signedUp: boolean = await signUpRequest(user);
-      
-        if(signedUp) {
+        axiosInstance.post("http://localhost:8080/api/user/signup", user)
+        .then(response => {
+          console.log('Response Headers:', response.headers);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
+        if(true) {
           setAlertMessage('User created successfully');
           setAlertType('success');
         } else {
@@ -102,7 +108,6 @@ export const SignUp = (): ReactElement => {
   const test = async () => {  
     axiosInstance.get('http://localhost:8080/api/user/all')
     .then(response => {
-      setupXsrfInterceptor(document.cookie);
     })
     .catch(error => {
       console.log(error);

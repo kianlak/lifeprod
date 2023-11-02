@@ -1,7 +1,0 @@
-package com.example.demo.security;
-
-@Configuration
-@EnableWebSecurity
-public class SecurityConfiguration {
-    
-}

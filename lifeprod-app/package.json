@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run dev-backend\"  \"npm run dev-frontend\"",
+    "dev": "concurrently \"npm run dev-backend\" \"npm run wait-backend && npm run dev-frontend\"",
     "dev-frontend": "vite",
-    "dev-backend": "java -jar ../spring/lifeprod-backend/target/lifeprod-backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=development",
+    "dev-backend": "java -jar ../spring/lifeprodbackend/target/lifeprodbackend-0.0.1-SNAPSHOT.jar --spring.profiles.active=development",
+    "wait-backend": "node src/wait-for-backend.js",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -35,7 +36,8 @@
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vite-plugin-electron": "^0.14.0",
-    "vite-plugin-electron-renderer": "^0.14.5"
+    "vite-plugin-electron-renderer": "^0.14.5",
+    "wait-on": "^7.0.1"
   },
   "main": "dist-electron/main.js"
 }

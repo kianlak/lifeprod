@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import axios from 'axios';
 import path from 'node:path'
 
 // The built directory structure
@@ -14,6 +15,7 @@ process.env.DIST = path.join(__dirname, '../dist')
 process.env.VITE_PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
 
 let win: BrowserWindow | null
+let xsrfToken: string;
 
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
@@ -45,31 +47,33 @@ function createWindow() {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
+  const axiosInstance = axios.create({
+    headers: {
+      'X-XSRF-TOKEN': xsrfToken,
+      'Content-Type': 'application/json',
+    }
+  });
   // Shutdown Spring Server
-  fetch('http://localhost:8080/actuator/shutdown', { method: 'POST' })
-    .then(response => {
-      if (!response.ok) {
-        console.error('Failed to close Spring Boot: ', response.status);
-        throw new Error('HTTP error! status: ' + response.status);
-      }
+  axiosInstance.post('http://localhost:8080/actuator/shutdown')
+  .then(() => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+      win = null;
+    }
+  })
+  .catch(error => {
+    console.log(xsrfToken);
+    console.error('Error during Axios request:', error);
+    if (process.platform !== 'darwin') {
+      app.quit();
+      win = null;
+    }
+  });
+});
 
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      
-      if (process.platform !== 'darwin') {
-        app.quit();
-        win = null;
-      }
-    })
-    .catch(error => {
-      console.error('Error during fetch operation:', error);
-      if (process.platform !== 'darwin') {
-        app.quit();
-        win = null;
-      }
-    });
+ipcMain.on('send-data-to-electron', (_event, data) => {
+  console.log('Data received from React:', data);
+  xsrfToken = data;
 });
 
 app.on('activate', () => {

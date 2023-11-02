@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "electron", "express-server.ts"],
+  "include": ["src", "electron", "express-server.ts", "src/Axios.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -11,15 +11,16 @@ const axiosInstance = axios.create({
   }
 });
 
-
-
-function setupXsrfInterceptor(xsrfToken: string) {
-  axiosInstance.interceptors.request.use(config => {
-    if (xsrfToken) {
-      config.headers['X-XSRF-TOKEN'] = xsrfToken;
-    }
+axiosInstance.interceptors.request.use(
+  config => {
+    config.headers['X-XSRF-TOKEN'] = sessionStorage.getItem("xsrf-token");
     return config;
-  });
-}
+  },
+  error => {
+    // Handle request error
+    console.error('Request Error', error);
+    return Promise.reject(error);
+  }
+);
 
-export { axiosInstance, setupXsrfInterceptor };
+export { axiosInstance };
