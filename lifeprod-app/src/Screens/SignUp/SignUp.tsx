@@ -64,7 +64,7 @@ export const SignUp = (): ReactElement => {
         email: email
       };
 
-      await signUpRequest(user) ? handleHomeRedirect() : {};
+      await signUpRequest(user) ? handleDashboardRedirect() : {};
     }
   };
   
@@ -72,8 +72,8 @@ export const SignUp = (): ReactElement => {
     navigate("/login");
   };
 
-  const handleHomeRedirect = (): void => {
-    navigate("/home");
+  const handleDashboardRedirect = (): void => {
+    navigate("/dashboard");
   };
 
   return (
