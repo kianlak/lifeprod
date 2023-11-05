@@ -20,6 +20,7 @@ public class CorsConfig {
     config.setAllowedOrigins(Arrays.asList(SecurityConstants.PERMITTED_CORS_URLS.toArray(new String[0])));
     config.setAllowedMethods(Collections.singletonList("*"));
     config.setAllowedHeaders(Collections.singletonList("*"));
+    config.setExposedHeaders(Arrays.asList("Authorization"));
     config.setAllowCredentials(true);
     config.setMaxAge(3600L);
 

@@ -10,6 +10,7 @@ public interface SecurityConstants {
 	public static final List<String> ACCESS_CONTROL_URLS = Arrays.asList(
 		USER_PATH + "/all",
 		USER_PATH + "/signup",
+		USER_PATH + "/login",
 		
 		CSRF_PATH + "/get",
 		

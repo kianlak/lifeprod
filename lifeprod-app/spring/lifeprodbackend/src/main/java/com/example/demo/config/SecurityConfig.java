@@ -33,8 +33,7 @@ public class SecurityConfig {
     requestHandler.setCsrfRequestAttributeName("_csrf");
     
     http
-    .securityContext((context) -> context.requireExplicitSave(false))
-		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+    .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource))
     .csrf((csrf) -> csrf
     	.csrfTokenRequestHandler(requestHandler)

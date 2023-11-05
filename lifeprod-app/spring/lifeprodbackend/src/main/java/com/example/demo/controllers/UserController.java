@@ -41,4 +41,9 @@ public class UserController {
     		.body("Failed to register user");
     }
   }
+  
+//  @PostMapping("/login")
+//  public ResponseEntity<String> loginUser(@RequestBody User user) {
+//  	
+//  }
 }

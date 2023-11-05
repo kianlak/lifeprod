@@ -1,6 +1,6 @@
 import { ReactElement, useState, ChangeEvent } from 'react';
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { signUpRequest } from './Services/SignUpService';
+import { getAllRequest, signUpRequest } from './Services/SignUpService';
 import { SignUpIputField } from './Components/SignUpInputField';
 import { Alert } from '../../Components/Alert/Alert';
 
@@ -58,7 +58,7 @@ export const SignUp = (): ReactElement => {
 
   const signUp = async (): Promise<void> => {
     if(checkSignUp()) {
-      const user: User = {
+      const user: SignUpInfo = {
         username: username,
         password: password,
         email: email
@@ -66,6 +66,10 @@ export const SignUp = (): ReactElement => {
 
       await signUpRequest(user) ? handleDashboardRedirect() : {};
     }
+  };
+
+  const getAll = async (): Promise<void> => {
+    await getAllRequest();
   };
   
   const handleLoginRedirect = (): void => {
@@ -79,6 +83,7 @@ export const SignUp = (): ReactElement => {
   return (
     <>
       <Alert />
+      <button className="signup-button" onClick={getAll}>Sign Up</button>
       <div className='signup-box'>
         <h2>LifeProd</h2>
         <form>

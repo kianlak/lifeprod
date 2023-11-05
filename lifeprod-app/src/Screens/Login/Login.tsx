@@ -4,6 +4,7 @@ import { LoginInputField } from './Components/LoginInputField';
 import { Alert } from '../../Components/Alert/Alert';
 
 import './Login.css'
+import { loginRequest } from './Services/LoginService';
 
 export const Login = (): ReactElement => {
   const [username, setUsername] = useState<string>("");
@@ -11,13 +12,22 @@ export const Login = (): ReactElement => {
 
   const navigate = useNavigate();
 
-  const checkLogin = () => {
+  const checkLogin = async (): Promise<void> => {
+    const user: LoginInfo = {
+      username: username,
+      password: password
+    }
     
+    await loginRequest(user) ? handleDashboardRedirect() : {};
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = (): void => {
     navigate("/signup");
   }
+
+  const handleDashboardRedirect = (): void => {
+    navigate("/dashboard");
+  };
 
   return (
     <>
