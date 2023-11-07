@@ -28,27 +28,3 @@ export const signUpRequest = async (user: SignUpInfo): Promise<boolean> => {
     return false;
   })
 }
-
-export const getAllRequest = async (): Promise<boolean> => axiosInstance.get(`${BASE_URL}/all`)
-  .then(response => {
-    EventEmitter.dispatch({
-      eventType: 'set-alert',
-      eventPayload: {
-        alertType: 'success',
-        alertMessage: "YIPEE"
-      }
-    });
-
-    return true;
-  })
-  .catch(error => {
-    EventEmitter.dispatch({
-      eventType: 'set-alert',
-      eventPayload: {
-        alertType: 'error',
-        alertMessage: "aww"
-      }
-    });
-
-    return false;
-  })

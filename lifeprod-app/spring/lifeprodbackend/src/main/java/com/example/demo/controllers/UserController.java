@@ -42,8 +42,18 @@ public class UserController {
     }
   }
   
-//  @PostMapping("/login")
-//  public ResponseEntity<String> loginUser(@RequestBody User user) {
-//  	
-//  }
+  @PostMapping("/login")
+  public ResponseEntity<String> loginUser(@RequestBody User user) {
+  	User existingUser = userService.findByUsername(user.getUsername());
+  	
+  	boolean loginSuccess = userService.loginUser(existingUser, user.getPassword());
+  	
+    if (loginSuccess) {
+      return ResponseEntity.ok("Login successful");
+    } 
+    else {
+      return ResponseEntity.status(401)
+      	.body("Invalid username or password");
+    }
+  }
 }

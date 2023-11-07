@@ -1,10 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LoginInputField } from './Components/LoginInputField';
+import { loginRequest } from './Services/LoginService';
 import { Alert } from '../../Components/Alert/Alert';
 
 import './Login.css'
-import { loginRequest } from './Services/LoginService';
+import EventEmitter from '../../Components/Utilities/EventEmitter';
 
 export const Login = (): ReactElement => {
   const [username, setUsername] = useState<string>("");
@@ -12,16 +13,52 @@ export const Login = (): ReactElement => {
 
   const navigate = useNavigate();
 
-  const checkLogin = async (): Promise<void> => {
-    const user: LoginInfo = {
-      username: username,
-      password: password
+  const checkLogin = (): boolean => {
+    const isUsernameCharactersValid: RegExp = /^[a-zA-Z0-9]+$/;
+    const isPasswordCharactersValid: RegExp = /^[a-zA-Z0-9@\$!%*?&]+$/;
+
+    const conditions = [{
+        validation: () => !(username.length >= 7 && username.length <= 16),
+        alertMessage: "Username needs to be 7 to 16 characters"
+      }, {
+        validation: () => !isUsernameCharactersValid.test(username),
+        alertMessage: "Username cannot include special characters"
+      }, {
+        validation: () => !(password.length >= 6 && password.length <= 32),
+        alertMessage: "Password needs to be 6 to 32 characters"
+      }, {
+        validation: () => !isPasswordCharactersValid.test(password),
+        alertMessage: "Password can only use these special characters: @, $, !, %, *, ?, &"
+      }
+    ];
+
+    for(const condition of conditions) {
+      if(condition.validation()) {
+        EventEmitter.dispatch({
+          eventType: 'set-alert', 
+          eventPayload: {
+            alertType: 'error',
+            alertMessage: condition.alertMessage
+          }
+        });
+        return false;
+      }
     }
-    
-    await loginRequest(user) ? handleDashboardRedirect() : {};
+    return true;
+  };
+
+  const login = async (): Promise<void> => {
+    if(checkLogin()) {
+      const user: LoginInfo = {
+        username: username,
+        password: password
+      }
+      
+      await loginRequest(user) ? handleDashboardRedirect() : {};
+    }
   }
 
-  const handleSignUp = (): void => {
+  const handleSignUpRedirect = (): void => {
     navigate("/signup");
   }
 
@@ -49,8 +86,8 @@ export const Login = (): ReactElement => {
           />
           <div className='forget-password'><a href='#'>Forgot Password?</a></div>
         </form>
-        <button className="login-button" onClick={checkLogin}>Login</button>
-        <div className='signup-text'>Don't have an account? <a href='#' onClick={handleSignUp}>Sign Up</a></div>
+        <button className="login-button" onClick={login}>Login</button>
+        <div className='signup-text'>Don't have an account? <a href='#' onClick={handleSignUpRedirect}>Sign Up</a></div>
       </div>
     </>
   );

@@ -15,7 +15,7 @@ import com.example.demo.repositories.UserRepository;
 public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-  
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 		
   private final UserRepository userRepository;
@@ -41,6 +41,18 @@ public class UserService {
     }
     return false;
   }
+  
+  public boolean loginUser(User user, String password) {
+		LOGGER.info("\u001B[36m Attempting to Login User... \u001B[0m");
+  			
+		if (user != null && verifyPassword(password, user.getPassword())) {
+			LOGGER.info("\u001B[32m SUCCESS: Logged in user {} \u001B[0m", user.getUsername());
+			return true;
+		}
+		
+		LOGGER.error("\u001B[31m ERROR: Could not Login user {}, due to password mismatch or no user with that username \u001B[0m", user.getUsername());
+		return false;
+  }
 
   public boolean existsByEmail(String email) {
     return userRepository.existsByEmail(email);
@@ -48,6 +60,14 @@ public class UserService {
 
   public boolean existsByUsername(String username) {
     return userRepository.existsByUsername(username);
+  }
+  
+  public User findByUsername(String username) {
+  	return userRepository.findByUsername(username);
+  }
+  
+  public boolean verifyPassword(String plainPassword, String hashedPassword) {
+    return passwordEncoder.matches(plainPassword, hashedPassword);
   }
   
   public List<User> getAllUsers() {

@@ -12,6 +12,8 @@ public interface SecurityConstants {
 		USER_PATH + "/signup",
 		USER_PATH + "/login",
 		
+		"/sendMail",
+		
 		CSRF_PATH + "/get",
 		
 		"/actuator/shutdown"
@@ -31,6 +33,8 @@ public interface SecurityConstants {
 		USER_PATH + "/signup",
 		
 		CSRF_PATH + "/get",
+		
+		"/sendMail",
 		
 		"/actuator/shutdown"
 	);

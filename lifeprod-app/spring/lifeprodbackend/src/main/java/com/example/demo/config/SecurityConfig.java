@@ -33,7 +33,8 @@ public class SecurityConfig {
     requestHandler.setCsrfRequestAttributeName("_csrf");
     
     http
-    .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    .securityContext((context) -> context.requireExplicitSave(false))
+    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
     .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource))
     .csrf((csrf) -> csrf
     	.csrfTokenRequestHandler(requestHandler)
@@ -43,7 +44,8 @@ public class SecurityConfig {
     .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
   	.authorizeHttpRequests((requests) -> requests
 			.requestMatchers(SecurityConstants.PERMITTED_ACCESS_CONTROL_URLS.toArray(new String[0])).permitAll()
-			.requestMatchers(SecurityConstants.ACCESS_CONTROL_URLS.toArray(new String[0])).authenticated())
+			.requestMatchers(SecurityConstants.ACCESS_CONTROL_URLS.toArray(new String[0])).authenticated()
+		)
     .formLogin(Customizer.withDefaults())
     .httpBasic(Customizer.withDefaults());
    
