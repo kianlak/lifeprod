@@ -20,12 +20,15 @@ let xsrfToken: string;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
+app.setPath('userData', path.join(app.getPath('appData'), 'LifeProd'));
+
 function createWindow() {
   win = new BrowserWindow({
     width: 700,
     height: 1000,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
     },
   }
   )
@@ -40,6 +43,8 @@ function createWindow() {
   } else {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
+    // win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+    // win.loadURL(`file://${path.join(__dirname, '../../../../', 'index.html')}`);
   }
 }
 

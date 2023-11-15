@@ -20,6 +20,13 @@
   color: #000000;
 }
 
+.signup-box form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .signup-button {
   background-color: #4caf50;
   color: white;

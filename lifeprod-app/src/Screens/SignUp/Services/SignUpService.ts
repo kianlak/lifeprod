@@ -10,9 +10,11 @@ export const signUpRequest = async (user: SignUpInfo): Promise<boolean> => {
       eventType: 'set-alert', 
       eventPayload: {
         alertType: 'success',
-        alertMessage: response.data
+        alertMessage: "User registered"
       }
     });
+
+    sessionStorage.setItem('user-id', response.data);
 
     return true;
   })

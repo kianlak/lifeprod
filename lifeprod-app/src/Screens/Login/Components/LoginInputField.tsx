@@ -11,9 +11,18 @@ interface LoginInputFieldProps {
 }
 
 export const LoginInputField = ({type, placeholder, value, onChange}: LoginInputFieldProps): ReactElement => {
+  const iconJSXElements: Record<string, JSX.Element> = {
+    'Username': <User className='login-icon' size={20} />,
+    'Password': <Lock className='login-icon' size={20} />
+  };
+
+  const getIconJSXElement = (key: string): JSX.Element => {
+    return iconJSXElements[key];
+  };
+
   return(
     <div className='login-input-container'>
-      {placeholder === 'Username' ? <User className='login-icon' size={20} /> : <Lock className='login-icon' size={20} />}
+      {getIconJSXElement(placeholder)}
       <input
         type={type}
         placeholder={placeholder}
@@ -23,3 +32,5 @@ export const LoginInputField = ({type, placeholder, value, onChange}: LoginInput
     </div>
   );
 };
+
+

@@ -17,6 +17,7 @@ public class UserController {
     this.userService = userService;
   }
 
+  // Removing later
   @GetMapping("/all")
   public ResponseEntity<List<User>> getAllUsers() {
     List<User> users = userService.getAllUsers();
@@ -34,7 +35,7 @@ public class UserController {
     
     if (signUpSuccess) {
       return ResponseEntity.status(HttpStatus.CREATED)
-        .body("User registered successfully");
+        .body(userService.findByUsername(user.getUsername()).getId().toString());	// Returns the new user's id
     } 
     else {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -49,7 +50,7 @@ public class UserController {
   	boolean loginSuccess = userService.loginUser(existingUser, user.getPassword());
   	
     if (loginSuccess) {
-      return ResponseEntity.ok("Login successful");
+      return ResponseEntity.ok(existingUser.getId().toString());	// Returns the user's id
     } 
     else {
       return ResponseEntity.status(401)

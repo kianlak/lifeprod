@@ -1,20 +1,20 @@
 import { axiosInstance } from "../../../Axios";
 import EventEmitter from "../../../Components/Utilities/EventEmitter";
 
-const BASE_URL = 'http://localhost:8080/api/user';
+const BASE_URL = 'http://localhost:8080/api/fp';
 
-export const loginRequest = async (user: LoginInfo): Promise<boolean> => {
-  return axiosInstance.post(`${BASE_URL}/login`, user)
+export const sendEmailWithTokenRequest = async (email: string): Promise<boolean> => {
+  const requestData = { email: email };
+
+  return axiosInstance.post(`${BASE_URL}/generate`, requestData)
   .then(response => {
     EventEmitter.dispatch({
       eventType: 'set-alert', 
       eventPayload: {
         alertType: 'success',
-        alertMessage: "Logged in"
+        alertMessage: response.data
       }
     });
-
-    sessionStorage.setItem('user-id', response.data);
 
     return true;
   })

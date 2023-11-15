@@ -39,5 +39,24 @@
     "vite-plugin-electron-renderer": "^0.14.5",
     "wait-on": "^7.0.1"
   },
-  "main": "dist-electron/main.js"
+  "main": "dist-electron/main.js",
+  "build": {
+    "files": [
+      "dist-electron/**/*",
+      "node_modules/**/*",
+      "spring/lifeprodbackend/target/lifeprodbackend-0.0.1-SNAPSHOT.jar"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
 }

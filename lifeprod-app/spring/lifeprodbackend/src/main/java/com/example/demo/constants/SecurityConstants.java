@@ -5,17 +5,26 @@ import java.util.List;
 
 public interface SecurityConstants {
 	final String USER_PATH = "/api/user";
+	final String EMAIL_PATH = "/api/email";
+	final String FORGOT_PASSWORD_PATH = "/api/fp";
 	final String CSRF_PATH = "/api/csrf";
 	
 	public static final List<String> ACCESS_CONTROL_URLS = Arrays.asList(
+		// User Paths
 		USER_PATH + "/all",
 		USER_PATH + "/signup",
 		USER_PATH + "/login",
 		
+		// Email Paths
 		"/sendMail",
 		
+		// Forgot Password Paths
+		FORGOT_PASSWORD_PATH + "/generate",
+		
+		// CSRF Paths
 		CSRF_PATH + "/get",
 		
+		// Actuator Paths
 		"/actuator/shutdown"
 	);
 	
@@ -30,12 +39,10 @@ public interface SecurityConstants {
 	);
 
 	public static final List<String> OMITTED_CSRF_URLS = Arrays.asList(
-		USER_PATH + "/signup",
-		
+		// CSRF Paths
 		CSRF_PATH + "/get",
 		
-		"/sendMail",
-		
+		// Actuator Paths
 		"/actuator/shutdown"
 	);
 }

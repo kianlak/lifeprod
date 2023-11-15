@@ -59,8 +59,12 @@ export const Login = (): ReactElement => {
   }
 
   const handleSignUpRedirect = (): void => {
-    navigate("/signup");
+    navigate("/sign-up");
   }
+
+  const handleForgotPasswordRedirect = (): void => {
+    navigate("/forgot-password");
+  };
 
   const handleDashboardRedirect = (): void => {
     navigate("/dashboard");
@@ -84,8 +88,8 @@ export const Login = (): ReactElement => {
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}}
           />
-          <div className='forget-password'><a href='#'>Forgot Password?</a></div>
         </form>
+        <div className='forget-password'><a href='#' onClick={handleForgotPasswordRedirect}>Forgot Password?</a></div>
         <button className="login-button" onClick={login}>Login</button>
         <div className='signup-text'>Don't have an account? <a href='#' onClick={handleSignUpRedirect}>Sign Up</a></div>
       </div>

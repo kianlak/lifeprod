@@ -27,7 +27,7 @@ public class UserService {
   public boolean signUpUser(User user) {
 		LOGGER.info("\u001B[36m Attempting to Sign Up User... \u001B[0m");
   	
-    if (!userRepository.existsByUsername(user.getUsername()) && !userRepository.existsByEmail(user.getEmail())) {
+		if (!userRepository.existsByUsername(user.getUsername()) && !userRepository.existsByEmail(user.getEmail())) {
       try {
       	String hashedPassword = passwordEncoder.encode(user.getPassword());
     		user.setPassword(hashedPassword);
@@ -40,7 +40,7 @@ public class UserService {
       }
     }
     return false;
-  }
+	}
   
   public boolean loginUser(User user, String password) {
 		LOGGER.info("\u001B[36m Attempting to Login User... \u001B[0m");
@@ -64,6 +64,10 @@ public class UserService {
   
   public User findByUsername(String username) {
   	return userRepository.findByUsername(username);
+  }
+  
+  public User findByEmail(String email) {
+  	return userRepository.findByEmail(email);
   }
   
   public boolean verifyPassword(String plainPassword, String hashedPassword) {

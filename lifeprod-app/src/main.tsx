@@ -20,8 +20,9 @@ window.ipcRenderer.on('main-process-message', (_event, message) => {
 
 axiosInstance.get("http://localhost:8080/api/csrf/get")
 .then(() => {
-  window.ipcRenderer.send('send-data-to-electron', document.cookie.split('=')[1]);
-  sessionStorage.setItem("xsrf-token", document.cookie.split('=')[1]);
+  let token: string = document.cookie.split('=')[1];
+  window.ipcRenderer.send('send-data-to-electron', token);
+  sessionStorage.setItem("xsrf-token", token);
 })
 .catch(error => {
 
