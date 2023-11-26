@@ -18,13 +18,14 @@ window.ipcRenderer.on('main-process-message', (_event, message) => {
   console.log(message)
 });
 
-axiosInstance.get("http://localhost:8080/api/csrf/get")
-.then(() => {
-  let token: string = document.cookie.split('=')[1];
-  window.ipcRenderer.send('send-data-to-electron', token);
-  sessionStorage.setItem("xsrf-token", token);
-})
-.catch(error => {
-
-  console.log(error);
-});
+// axiosInstance.get("http://localhost:8080/api/csrf/get")
+// .then(() => {
+//   let token: string = document.cookie.split('=')[1];
+//   if(token !== undefined) {
+//     window.ipcRenderer.send('send-data-to-electron', document.cookie);
+//     sessionStorage.setItem("xsrf-token", token);
+//   }
+// })
+// .catch(error => {
+//   console.log(error);
+// });

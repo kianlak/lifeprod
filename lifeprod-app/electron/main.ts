@@ -24,7 +24,7 @@ app.setPath('userData', path.join(app.getPath('appData'), 'LifeProd'));
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 700,
+    width: 900,
     height: 1000,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -77,6 +77,7 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('send-data-to-electron', (_event, data) => {
+  console.log(data);
   console.log('Data received from React:', data);
   xsrfToken = data;
 });

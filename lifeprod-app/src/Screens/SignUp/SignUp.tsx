@@ -64,15 +64,15 @@ export const SignUp = (): ReactElement => {
         email: email
       };
 
-      await signUpRequest(user) ? handleDashboardRedirect() : {};
+      await signUpRequest(user) ? routeToDashboardPage() : {};
     }
   };
   
-  const handleLoginRedirect = (): void => {
+  const routeToLoginPage = (): void => {
     navigate("/login");
   };
 
-  const handleDashboardRedirect = (): void => {
+  const routeToDashboardPage = (): void => {
     navigate("/dashboard");
   };
 
@@ -112,7 +112,7 @@ export const SignUp = (): ReactElement => {
           />
         </form>
         <button className="signup-button" onClick={signUp}>Sign Up</button>
-        <div className='login-text'>Already have an account? <a href='#' onClick={handleLoginRedirect}>Login</a></div>
+        <div className='login-text'>Already have an account? <a href='#' onClick={routeToLoginPage}>Login</a></div>
       </div>
     </>
   );

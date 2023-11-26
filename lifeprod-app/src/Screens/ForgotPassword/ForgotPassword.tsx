@@ -4,6 +4,8 @@ import { TokenVerificationForm } from './Components/TokenVerificationForm';
 import { EmailVerificationForm } from './Components/EmailVerificationForm';
 
 import './ForgotPassword.css'
+import { useNavigate } from 'react-router-dom';
+import { CaretCircleLeft } from '@phosphor-icons/react';
 
 export const ForgotPassword = (): ReactElement => {
   const [email, setEmail] = useState<string>("");
@@ -12,15 +14,23 @@ export const ForgotPassword = (): ReactElement => {
   const [newPassword, setNewPassword] = useState<string>("");
   const [retypeNewPassword, setRetypeNewPassword] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const handleVerifyEmail = () => {
-    // Callback function to change the state in the parent component
     setValidEmail(true);
+  };
+
+  const routeToLoginPage = () => {
+    navigate('/login');
   };
 
   return (
     <>
      <Alert />
       <div className='fp-box'>
+        <a href='#' onClick={routeToLoginPage} className='fp-icon-button'>
+          <CaretCircleLeft size={32} />
+        </a>
         <h2>Forgot Password</h2>
         {validEmail ? (
           <TokenVerificationForm

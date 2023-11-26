@@ -54,19 +54,19 @@ export const Login = (): ReactElement => {
         password: password
       }
       
-      await loginRequest(user) ? handleDashboardRedirect() : {};
+      await loginRequest(user) ? routeToDashboardPage() : {};
     }
   }
 
-  const handleSignUpRedirect = (): void => {
+  const routeToSignUpPage = (): void => {
     navigate("/sign-up");
   }
 
-  const handleForgotPasswordRedirect = (): void => {
+  const routeToForgotPasswordPage = (): void => {
     navigate("/forgot-password");
   };
 
-  const handleDashboardRedirect = (): void => {
+  const routeToDashboardPage = (): void => {
     navigate("/dashboard");
   };
 
@@ -89,9 +89,9 @@ export const Login = (): ReactElement => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}}
           />
         </form>
-        <div className='forget-password'><a href='#' onClick={handleForgotPasswordRedirect}>Forgot Password?</a></div>
+        <div className='forget-password'><a href='#' onClick={routeToForgotPasswordPage}>Forgot Password?</a></div>
         <button className="login-button" onClick={login}>Login</button>
-        <div className='signup-text'>Don't have an account? <a href='#' onClick={handleSignUpRedirect}>Sign Up</a></div>
+        <div className='signup-text'>Don't have an account? <a href='#' onClick={routeToSignUpPage}>Sign Up</a></div>
       </div>
     </>
   );

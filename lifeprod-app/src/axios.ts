@@ -7,7 +7,7 @@ const base64Credentials = btoa(username + ':' + password);
 const axiosInstance = axios.create({
   withCredentials: true,
   headers: {
-    'Authorization': 'Basic ' + base64Credentials
+    'Authorization': 'Basic ' + base64Credentials,
   }
 });
 
@@ -17,10 +17,27 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   error => {
-    // Handle request error
     console.error('Request Error', error);
     return Promise.reject(error);
   }
 );
+
+axiosInstance.interceptors.response.use(
+  response => {
+    const csrfToken = getCookie();
+
+    if (csrfToken) {
+      sessionStorage.setItem('xsrf-token', csrfToken);
+      window.ipcRenderer.send('send-data-to-electron', csrfToken);
+    }
+    return response;
+  }
+);
+
+const getCookie = (): string => {
+  const cookies = document.cookie.split(';');
+  let token: string = cookies[0].split('=')[1];
+  return token;
+}
 
 export { axiosInstance };

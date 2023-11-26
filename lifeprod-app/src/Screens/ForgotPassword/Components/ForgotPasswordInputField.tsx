@@ -34,9 +34,13 @@ export const ForgotPasswordInputField = ({type, placeholder, value, onChange}: F
   };
 
   return(
-    <div className='fp-input-container'>
-      {getIconJSXElement(placeholder)}
-      {inputField()}
-    </div>
+    <>
+      <div className='fp-input-field-row'>
+        <div className='fp-input-container'>
+          {getIconJSXElement(placeholder)}
+          {inputField()}
+        </div>
+      </div>
+    </>
   );
 };
