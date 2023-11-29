@@ -9,6 +9,7 @@
   box-sizing: border-box;
   box-shadow: 0 0 30px 10px #00000022;
   border-radius: 10px;
+  animation: fadeIn 1s;
 }
 
 .login-box h2 {
@@ -72,4 +73,9 @@
 
 .signup-text a:hover {
   text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 100; }
 }

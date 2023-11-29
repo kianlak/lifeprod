@@ -1,0 +1,13 @@
+.dashboard-dropdown {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-family: 'Poppins Selections';
+  font-size: 15px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-dropdown:hover {
+  border: 1px solid #007BFF;
+}

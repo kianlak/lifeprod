@@ -1,0 +1,39 @@
+.dashboard-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 850px;
+  width: 800px;
+  padding: 20px 40px;
+  transform: translate(-50%, -50%);
+  background: #FFFFFFCE;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px 10px #00000022;
+  border-radius: 10px;
+  animation: fadeIn 1s;
+}
+
+.dashboard-box h2 {
+  font-family: 'Poppins H2 Title';
+  margin-bottom: 15px;
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #000000;
+}
+
+.dashboard-radar-content-box {
+  position: absolute;
+  height: 350px;
+  width: 720px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.651);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 10px 0px #00000022;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 100; }
+}
