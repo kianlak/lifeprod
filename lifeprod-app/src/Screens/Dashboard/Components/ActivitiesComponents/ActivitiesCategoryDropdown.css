@@ -1,0 +1,22 @@
+.activities-category-dropdown {
+  margin-bottom: 24px;
+  display: flex;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  height: 52.5px;
+  width: 150px;
+  font-family: 'Poppins Selections';
+  
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activities-category-dropdown:hover {
+  border: 1px solid #007BFF;
+}
+
+.activities-category-dropdown option {
+  font-size: 14px;
+  padding: 5px;
+}

@@ -1,0 +1,17 @@
+.datepicker-container {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+}
+
+input[type="date"] {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  align-items: left;
+  cursor: pointer;
+}

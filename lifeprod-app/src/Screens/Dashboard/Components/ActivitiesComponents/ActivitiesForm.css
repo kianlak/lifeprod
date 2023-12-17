@@ -1,0 +1,17 @@
+.activities-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.row-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  width: 620px;
+  padding-left: 25px;
+  padding-right: 25px;
+}

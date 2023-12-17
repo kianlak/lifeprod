@@ -6,11 +6,13 @@ import java.util.List;
 public interface SecurityConstants {
 	final String USER_PATH = "/api/user";
 	final String FORGOT_PASSWORD_PATH = "/api/fp";
+	final String ENTRY_PATH = "/api/entry";
 	
 	public static final List<String> ACCESS_CONTROL_URLS = Arrays.asList(
 		// API Paths
 		USER_PATH + "/**",
 		FORGOT_PASSWORD_PATH + "/**",
+		ENTRY_PATH + "/**",
 		
 		// Actuator Paths
 		"/actuator/shutdown"

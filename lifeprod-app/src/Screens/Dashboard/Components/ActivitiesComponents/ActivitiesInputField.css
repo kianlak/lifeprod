@@ -1,0 +1,21 @@
+.activities-input-container {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  width: 600px;
+  height: 35px;
+  border: 1px solid;
+  border-color: #CCCCCC;
+  background-color: white;
+  padding: 8px;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.activities-input-container input {
+  font-size: 14px;
+}
+
+.activities-input-container:focus-within {
+  border-color: #007BFF;
+}

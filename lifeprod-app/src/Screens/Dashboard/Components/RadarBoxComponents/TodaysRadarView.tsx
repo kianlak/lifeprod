@@ -28,7 +28,7 @@ export const TodaysRadarView = (): ReactElement => {
       keys={['You']}
       indexBy="category"
       valueFormat=">-.2f"
-      margin={{ top: 50, right: 90, bottom: 40, left: 90 }}
+      margin={{ top: 30, right: 90, bottom: 40, left: 90 }}
 
       colors={{ scheme: 'category10' }}
       borderColor={{ from: 'color' }}
@@ -48,8 +48,8 @@ export const TodaysRadarView = (): ReactElement => {
       
       legends={[{
         anchor: 'top-left',
-        translateX: -50,
-        translateY: -40,
+        translateX: -75,
+        translateY: -25,
 
         direction: 'column',
         symbolShape: 'circle',
